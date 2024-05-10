@@ -66,18 +66,57 @@ php artisan storage:link
 php artisan make:model Product -m
 ```
 
+```console
+php artisan make:model Gallery -m
+```
+
 - To generate resource form and list.
 
 ```console
-php artisan make:filament-resource Product
+php artisan make:filament-resource Product -G --soft-deletes
 ```
+
+- (Optional) If you want to add a View page to an existing resource, create a new page in your resource's Pages directory:
 
 ```console
-
+php artisan make:filament-page ViewProduct --resource=ProductResource --type=ViewRecord
 ```
+
+- If you'd also like a View page, use the --view flag.
 
 ```console
+php artisan make:filament-resource Gallery -G --soft-deletes --view
 ```
 
+- Artisan command to create a relation manager.
+
+- ProductResource is the name of the resource class. Since galleries belong to products, the galleries should be displayed on the Edit Product page.
+
+- galleriies is the name of the relationship in the Product model.
+
+- name is the column to display from the galleries table.
+
 ```console
+php artisan make:filament-relation-manager ProductResource galleries name
 ```
+
+- Register the new relation manager in the getRelations() method of the ProductResource.
+
+- (Optional) Create a stats widget using the following artisan command:
+
+```console
+php artisan make:filament-widget ProductTypeOverview --stats-overview
+```
+
+- (Optional) Create a chart widget using the following artisan command:
+
+```console
+php artisan make:filament-widget ProductsChart --chart
+```
+
+- (Optional) To populate chart data from an Eloquent model, Filament recommends that you install the flowframe/laravel-trend package:
+
+```console
+composer require flowframe/laravel-trend
+```
+
