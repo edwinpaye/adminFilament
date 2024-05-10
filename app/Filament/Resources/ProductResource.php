@@ -44,6 +44,25 @@ class ProductResource extends Resource
                         ->label('Descripcion')
                         ->required()
                         ->maxLength(255),
+                    Forms\Components\Repeater::make('galleries')
+                        ->relationship()
+                        ->schema([
+                            Forms\Components\TextInput::make('name')
+                                ->label('Nombre')
+                                ->required()
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('description')
+                                ->label('Descripcion')
+                                ->required()
+                                ->maxLength(255),
+                        ])
+                        ->columns(2)
+                        ->addActionLabel('Agregar nueva galleria')
+                        ->label('Galerias')
+                        ->defaultItems(0)
+                        ->collapsible()
+                        ->collapsed()
+                        ->columnSpanFull(),
                 ])
                 ->columns(2),
             ]);
@@ -65,16 +84,21 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                    ->label('ID')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Mombre')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Descripcion')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de registro')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Ultima actualizacion')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -84,7 +108,7 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                // Tables\Filters\TrashedFilter::make(),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
