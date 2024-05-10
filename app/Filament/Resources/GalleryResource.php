@@ -7,8 +7,10 @@ use App\Filament\Resources\GalleryResource\RelationManagers;
 use App\Models\Gallery;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Infolists;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -53,6 +55,21 @@ class GalleryResource extends Resource
                             ->maxLength(255),
                     ])
                     ->required(),
+                Forms\Components\FileUpload::make('gallery_items')
+                    ->multiple()
+                    ->image()
+                    ->directory('images'),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('name')
+                    ->label('Nombre:'),
+                Infolists\Components\TextEntry::make('description')
+                    ->label('Descripcion:'),
             ]);
     }
 
@@ -89,15 +106,20 @@ class GalleryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -105,7 +127,7 @@ class GalleryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\GalleryItemsRelationManager::class,
         ];
     }
 
@@ -114,6 +136,7 @@ class GalleryResource extends Resource
         return [
             'index' => Pages\ListGalleries::route('/'),
             'create' => Pages\CreateGallery::route('/create'),
+            'view' => Pages\ViewGallery::route('/{record}'),
             'edit' => Pages\EditGallery::route('/{record}/edit'),
         ];
     }

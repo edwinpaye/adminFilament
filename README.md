@@ -97,7 +97,7 @@ php artisan make:filament-resource Gallery -G --soft-deletes --view
 - name is the column to display from the galleries table.
 
 ```console
-php artisan make:filament-relation-manager ProductResource galleries name
+php artisan make:filament-relation-manager ProductResource galleries name --soft-deletes
 ```
 
 - Register the new relation manager in the getRelations() method of the ProductResource.

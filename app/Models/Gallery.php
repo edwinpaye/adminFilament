@@ -19,7 +19,11 @@ class Gallery extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['name', 'description', 'product_id', 'gallery_items'];
+    protected $fillable = ['name', 'description', 'product_id'];
+
+    // protected $casts = [
+    //     'gallery_items' => 'array',
+    // ];
 
     public function product(): BelongsTo
     {

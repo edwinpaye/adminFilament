@@ -8,6 +8,8 @@ use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Actions\Action;
+// use Filament\Forms\Components\Repeater;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Infolists;
@@ -44,25 +46,29 @@ class ProductResource extends Resource
                         ->label('Descripcion')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\Repeater::make('galleries')
-                        ->relationship()
-                        ->schema([
-                            Forms\Components\TextInput::make('name')
-                                ->label('Nombre')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('description')
-                                ->label('Descripcion')
-                                ->required()
-                                ->maxLength(255),
-                        ])
-                        ->columns(2)
-                        ->addActionLabel('Agregar nueva galleria')
-                        ->label('Galerias')
-                        ->defaultItems(0)
-                        ->collapsible()
-                        ->collapsed()
-                        ->columnSpanFull(),
+                    // Forms\Components\Repeater::make('galleries')
+                    //     ->relationship()
+                    //     ->schema([
+                    //         Forms\Components\TextInput::make('name')
+                    //             ->label('Nombre')
+                    //             ->required()
+                    //             ->maxLength(255),
+                    //         Forms\Components\TextInput::make('description')
+                    //             ->label('Descripcion')
+                    //             ->required()
+                    //             ->maxLength(255),
+                    //     ])
+                    //     ->columns(2)
+                    //     ->addActionLabel('Agregar nueva galleria')
+                    //     ->label('Galerias')
+                    //     ->defaultItems(0)
+                    //     ->collapsible()
+                    //     ->collapsed()
+                    //     ->columnSpanFull()
+                    //     ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                    //     ->deleteAction(
+                    //         fn (Action $action) => $action->requiresConfirmation(),
+                    //     ),
                 ])
                 ->columns(2),
             ]);

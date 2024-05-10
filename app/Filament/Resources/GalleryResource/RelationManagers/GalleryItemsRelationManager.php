@@ -1,46 +1,38 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\GalleryResource\RelationManagers;
 
-use App\Filament\Resources\GalleryItemResource\Pages;
-use App\Filament\Resources\GalleryItemResource\RelationManagers;
-use App\Models\GalleryItem;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GalleryItemResource extends Resource
+class GalleryItemsRelationManager extends RelationManager
 {
-    protected static ?string $model = GalleryItem::class;
+    protected static string $relationship = 'gallery_items';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('image')
                     ->image()
-                    ->required()
-                    ->directory('images'),
-                Forms\Components\Select::make('gallery_id')
-                    ->relationship('gallery', 'name'),
+                    ->required(),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('image')
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('ID'),
                 Tables\Columns\ImageColumn::make('image')
                     ->square(),
-                Tables\Columns\TextColumn::make('gallery.name'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -57,29 +49,17 @@ class GalleryItemResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListGalleryItems::route('/'),
-            'create' => Pages\CreateGalleryItem::route('/create'),
-            'edit' => Pages\EditGalleryItem::route('/{record}/edit'),
-        ];
     }
 }

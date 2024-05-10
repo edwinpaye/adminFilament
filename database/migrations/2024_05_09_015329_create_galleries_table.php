@@ -15,8 +15,11 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('description');
-            $table->foreignUuid('product_id')->constrained('products')->nullOnDelete();
-            // $table->foreignIdFor(Product::class)->constrained('products')->nullOnDelete();
+            $table->foreignUuid('product_id')
+                ->nullable()
+                ->constrained('products')
+                ->nullOnDelete();
+            // $table->foreignIdFor(Product::class)->nullable()->constrained('products')->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });
