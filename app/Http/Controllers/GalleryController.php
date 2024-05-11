@@ -28,8 +28,28 @@ class GalleryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreGalleryRequest $request)
+    // public function store(Request $request)
     {
-        //
+        $request->validate([
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $uploadedImages = [];
+
+        foreach ($request->file('images') as $imageFile) {
+            $imageName = time() . '_' . $imageFile->getClientOriginalName();
+            $imagePath = '/images/' . $imageName;
+            $imageFile->move(public_path('images'), $imageName);
+
+            // $image = new Image();
+            // $image->name = $imageName;
+            // $image->path = $imagePath;
+            // $image->save();
+
+            // $uploadedImages[] = $image;
+        }
+
+        return response()->json(['message' => 'Images uploaded successfully', 'images' => $uploadedImages], 201);
     }
 
     /**

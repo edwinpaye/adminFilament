@@ -29,37 +29,36 @@ class GalleryResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Nombre')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->label('Descripcion')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('product_id')
-                    ->label('Producto')
-                    ->relationship('product', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
-                            ->label('Nombre')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('description')
-                            ->label('Descripcion')
-                            ->required()
-                            ->maxLength(255),
-                    ])
-                    ->required(),
-                Forms\Components\FileUpload::make('gallery_items')
-                    ->multiple()
-                    ->image()
-                    ->directory('images'),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('name')
+                ->label('Nombre')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('description')
+                ->label('Descripcion')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\Select::make('product_id')
+                ->label('Producto')
+                ->relationship('product', 'name')
+                ->searchable()
+                ->preload()
+                ->createOptionForm([
+                    Forms\Components\TextInput::make('name')
+                        ->label('Nombre')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('description')
+                        ->label('Descripcion')
+                        ->required()
+                        ->maxLength(255),
+                ]),
+                // ->required(),
+            Forms\Components\FileUpload::make('gallery_items')
+                ->multiple()
+                // ->image()
+                ->directory('images'),
+        ]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

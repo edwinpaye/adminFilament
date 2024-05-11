@@ -40,6 +40,9 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
+            ->brandName('Administracion')
+            // ->brandLogo(asset('images/logo.svg'))
+            // ->favicon(asset('images/favicon.png'))
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
