@@ -120,3 +120,54 @@ php artisan make:filament-widget ProductsChart --chart
 composer require flowframe/laravel-trend
 ```
 
+- To make the Api Rest:
+
+- Interfaces for repository.
+
+```console
+php artisan make:interface /Interfaces/ProductRepositoryInterface
+```
+
+```console
+php artisan make:interface /Interfaces/GalleryRepositoryInterface
+```
+
+- Repository class.
+
+```console
+php artisan make:class /Repositories/ProductRepository
+```
+
+```console
+php artisan make:class /Repositories/GalleryRepository
+```
+
+- Repository Provider.
+
+```console
+php artisan make:provider RepositoryServiceProvider
+```
+
+- For this example we just make GET endpoints.
+
+- ApiResponse Class.
+
+```console
+php artisan make:class /Classes/ApiResponse
+```
+
+- ProductResource for json response.
+
+```console
+php artisan make:resource ProductResource
+```
+
+```console
+ php artisan make:resource GalleryResource
+```
+
+- To publish the API route file, Execute the command:
+
+```console
+php artisan install:api
+```

@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ApiResponse;
 use App\Http\Requests\StoreGalleryRequest;
-use App\Http\Requests\UpdateGalleryRequest;
-use App\Models\Gallery;
+use App\Http\Resources\GalleryResource;
+use App\Interfaces\GalleryRepositoryInterface;
 
 class GalleryController extends Controller
 {
+    private GalleryRepositoryInterface $repository;
+    
+    public function __construct(GalleryRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $data = $this->repository->index();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return GalleryResource::collection($data);
     }
 
     /**
@@ -55,32 +57,11 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Gallery $gallery)
+    public function show($id)
     {
-        //
+        $data = $this->repository->getById($id);
+
+        return ApiResponse::sendResponse(new GalleryResource($data),'',200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateGalleryRequest $request, Gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Gallery $gallery)
-    {
-        //
-    }
 }
