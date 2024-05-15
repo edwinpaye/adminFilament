@@ -20,7 +20,7 @@ class ProductRepository implements ProductRepositoryInterface
    }
 
    public function getById($id){
-      return Product::findOrFail($id);
+      return Product::with('galleries')->findOrFail($id);
    }
 
    // public function store(array $data){

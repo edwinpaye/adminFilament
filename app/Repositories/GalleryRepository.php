@@ -20,7 +20,7 @@ class GalleryRepository implements GalleryRepositoryInterface
    }
 
    public function getById($id){
-      return Gallery::findOrFail($id);
+      return Gallery::with('gallery_items')->findOrFail($id);
    }
 
    // public function store(array $data){
