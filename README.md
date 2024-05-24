@@ -28,20 +28,33 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## How to create this project
 
+- Create the new laravel project.
+
 ```console
 composer create-project laravel/laravel admin
 ```
+
+- Change directory to the new project.
+
+
+```console
+cd admin
+```
+
+- Install filament.
 
 ```console
 composer require filament/filament
 ```
 
+- Install panels.
+
 ```console
 php artisan filament:install --panels
 ```
 
-```console
-php artisan filament:install --panels
+```
+php artisan key:generate
 ```
 
 - Then config environments.
@@ -170,4 +183,10 @@ php artisan make:resource ProductResource
 
 ```console
 php artisan install:api
+```
+
+- (Optional) To link storage in deploy, cd to html_public directory.
+
+```
+ln -sr admin/storage/app/public storage
 ```
